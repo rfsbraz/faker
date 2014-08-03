@@ -1,0 +1,8 @@
+first_names:
+  - James
+  - Penelope
+last_names:
+  - Jones
+  - Smith
+names:
+  - "{{.FirstName}} {{.LastName}}"
