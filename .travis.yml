@@ -4,5 +4,6 @@ go:
 - 1.3
 - tip
 install:
+- go get gopkg.in/yaml.v1
 - go build -v ./...
 - go test -v ./...
