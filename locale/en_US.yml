@@ -1,6 +1,8 @@
-first_names:
+first_name_female:
   - James
   - Penelope
+first_name_male:
+
 last_names:
   - Jones
   - Smith

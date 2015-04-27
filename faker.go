@@ -8,18 +8,18 @@ import (
 const DEFAULT_LOCALE = "en_US"
 
 type Faker struct {
-	Names *provider.Names
+	Person *provider.Person
 }
 
 func NewFaker(locale string) *Faker {
 	faker := &Faker{}
 
-	faker.Names = provider.NewNames(locale)
+	faker.Person = provider.NewPerson(locale)
 
 	return faker
 }
 
 func main() {
 	faker := NewFaker("pt_PT")
-	log.Println(faker.Names.Name())
+	log.Println(faker.Person.Name())
 }
