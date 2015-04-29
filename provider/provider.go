@@ -5,16 +5,19 @@ import (
 	"github.com/rfsbraz/faker/data"
 	"text/template"
 	"strings"
+	"math/rand"
+	"math"
 )
 
 type Provider struct {
 	Locale string
+	Path string
 }
 
 func (provider *Provider) Execute(category string) string {
 
 	//We create a template from the required category
-	tmpl, err := template.New("t").Parse(data.Load(category, provider.Locale))
+	tmpl, err := template.New("t").Parse(data.Load(category, provider.Locale, provider.Path))
 
 	if err != nil {
 		panic(err)
@@ -46,9 +49,21 @@ func (provider *Provider) Execute(category string) string {
 }
 
 func (provider *Provider) Load(category string) string {
-	return data.Load(category, provider.Locale)
+	return provider.LoadFrom(provider.Path, category)
+}
+
+func (provider *Provider) LoadFrom(path, category string) string {
+	return data.Load(category, provider.Locale, path)
+}
+
+func (provider *Provider) Number(length int) int {
+    return rand.Intn(int(math.Pow(10, float64(length))))
 }
 
 type Person struct {
+	Provider
+}
+
+type Address struct {
 	Provider
 }

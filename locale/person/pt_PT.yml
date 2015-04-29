@@ -1,9 +1,9 @@
-titles:
+title:
   - Sr.
   - Sra.
   - Eng.
 
-first_names:
+first_name:
   - Adriana
   - Afonso
   - Alex
@@ -206,7 +206,7 @@ first_names:
   - Érica
   - Íris
 
-last_names:
+last_name:
   - Abreu
   - Almeida
   - Alves
@@ -305,18 +305,18 @@ last_names:
   - Vicente
   - Vieira
 
-prefixes:
+prefix:
   - de
   - da
   - do
 
-names:
-  - '{{.Load "first_names"}} {{.Load "last_names"}}'
-  - '{{.Load "first_names"}} {{.Load "last_names"}}'
-  - '{{.Load "first_names"}} {{.Load "last_names"}}'
-  - '{{.Load "first_names"}} {{.Load "last_names"}}'
-  - '{{.Load "first_names"}} {{.Load "last_names"}}'
-  - '{{.Load "first_names"}} {{.Load "last_names"}}'
-  - '{{.Load "first_names"}} {{.Load "last_names"}} {{.Load "last_names"}}'
-  - '{{.Load "first_names"}} {{.Load "prefixes"}} {{.Load "last_names"}}'
-  - '{{.Load "first_names"}} {{.Load "first_names"}} {{.Load "last_names"}}'
+name:
+  - '{{.Load "first_name"}} {{.Load "last_name"}}'
+  - '{{.Load "first_name"}} {{.Load "last_name"}}'
+  - '{{.Load "first_name"}} {{.Load "last_name"}}'
+  - '{{.Load "first_name"}} {{.Load "last_name"}}'
+  - '{{.Load "first_name"}} {{.Load "last_name"}}'
+  - '{{.Load "first_name"}} {{.Load "last_name"}}'
+  - '{{.Load "first_name"}} {{.Load "last_name"}} {{.Load "last_name"}}'
+  - '{{.Load "first_name"}} {{.Load "prefix"}} {{.Load "last_name"}}'
+  - '{{.Load "first_name"}} {{.Load "first_name"}} {{.Load "last_name"}}'

@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
-func Load(name, locale string) string {
-	fi, err := ioutil.ReadFile(fmt.Sprintf("locale/%s.yml", locale))
+func Load(name, locale, path string) string {
+	fi, err := ioutil.ReadFile(fmt.Sprintf("locale/%s/%s.yml", path, locale))
 	if err != nil {
 		panic(err)
 	}
