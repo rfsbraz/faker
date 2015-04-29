@@ -2,7 +2,7 @@ faker [![GoDoc](https://godoc.org/github.com/rfsbraz/faker?status.png)](https://
 
 *Faker* is a golang package that generates fake data.
 
-It was inspired by '[Python Faker](https://github.com/joke2k/faker)' from [joke2k](https://github.com/joke2k) and '[Ruby Faker](https://github.com/stympy/faker)' from [stympy](https://github.com/stympy)
+It was inspired by '[Python Faker](https://github.com/joke2k/faker)' from [joke2k](https://github.com/joke2k) (which is also the source of all the initial localized content) and '[Ruby Faker](https://github.com/stympy/faker)' from [stympy](https://github.com/stympy)
 
 ----
 
