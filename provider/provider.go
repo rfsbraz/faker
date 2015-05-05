@@ -60,10 +60,18 @@ func (provider *Provider) Number(length int) int {
     return rand.Intn(int(math.Pow(10, float64(length))))
 }
 
+func (provider *Provider) Digit() int {
+    return rand.Intn(10)
+}
+
 type Person struct {
 	Provider
 }
 
 type Address struct {
+	Provider
+}
+
+type Barcode struct {
 	Provider
 }
