@@ -84,3 +84,8 @@ type Color struct {
 type Company struct {
 	Provider
 }
+
+type CreditCard struct {
+	Provider
+	CardTypes map[string]*Card
+}

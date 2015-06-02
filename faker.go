@@ -13,6 +13,7 @@ type Faker struct {
 	Barcode *provider.Barcode
 	Color *provider.Color
 	Company *provider.Company
+	CreditCard *provider.CreditCard
 }
 
 func NewFaker(locale string) *Faker {
@@ -23,6 +24,7 @@ func NewFaker(locale string) *Faker {
 	faker.Barcode = provider.NewBarcode()
 	faker.Color = provider.NewColor()
 	faker.Company = provider.NewCompany(locale)
+	faker.CreditCard = provider.NewCreditCard()
 
 	return faker
 }
@@ -43,4 +45,6 @@ func main() {
 	log.Println(faker.Color.RGBCSSColor())
 	log.Println(faker.Company.Name())
 	log.Println(faker.Company.CatchPhrase())
+	log.Println(faker.CreditCard.CardProvider("amex"))
+	log.Println(faker.CreditCard.CardProvider(""))
 }
