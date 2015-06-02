@@ -12,6 +12,7 @@ type Faker struct {
 	Address *provider.Address
 	Barcode *provider.Barcode
 	Color *provider.Color
+	Company *provider.Company
 }
 
 func NewFaker(locale string) *Faker {
@@ -21,6 +22,7 @@ func NewFaker(locale string) *Faker {
 	faker.Address = provider.NewAddress(locale)
 	faker.Barcode = provider.NewBarcode()
 	faker.Color = provider.NewColor()
+	faker.Company = provider.NewCompany(locale)
 
 	return faker
 }
@@ -39,4 +41,6 @@ func main() {
 	log.Println(faker.Color.RGBColorList())
 	log.Println(faker.Color.RGBColor())
 	log.Println(faker.Color.RGBCSSColor())
+	log.Println(faker.Company.Name())
+	log.Println(faker.Company.CatchPhrase())
 }

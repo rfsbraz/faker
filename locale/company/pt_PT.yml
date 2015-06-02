@@ -1,0 +1,51 @@
+company:
+  - '{{.LoadFrom "person" "last_name"}} {{.Load "company_suffix"}}'
+  - '{{.LoadFrom "person" "last_name"}} {{.LoadFrom "person" "last_name"}} {{.Load "company_suffix"}}'
+  - '{{.LoadFrom "person" "last_name"}}'
+
+catch_phrase:
+  - '{{.Load "catch_phrase_noun"}} {{.Load "catch_phrase_verb"}} {{.Load "catch_phrase_attributes"}}'
+
+catch_phrase_noun:
+  - 'a segurança'
+  - 'o prazer'
+  - 'o conforto'
+  - 'a simplicidade'
+  - 'a certeza'
+  - 'a arte'
+  - 'o poder'
+  - 'o direito'
+  - 'a possibilidade'
+  - 'a vantagem'
+  - 'a liberdade'
+
+catch_phrase_verb:
+  - 'de conseguir'
+  - 'de avançar'
+  - 'de evoluir'
+  - 'de mudar'
+  - 'de inovar'
+  - 'de ganhar'
+  - 'de atingir os seus objetivos'
+  - 'de concretizar seus projetos'
+  - 'de realizar seus sonhos'
+
+catch_phrase_attributes:
+  - 'de maneira eficaz'
+  - 'mais rapidamente'
+  - 'mais facilmente'
+  - 'simplesmente'
+  - 'com toda a tranquilidade'
+  - 'antes de tudo'
+  - 'naturalmente'
+  - 'sem preocupação'
+  - 'em estado puro'
+  - 'com força total'
+  - 'direto da fonte'
+  - 'com confiança'
+
+company_suffix:
+  - 'S/A'
+  - 'S.A.'
+  - 'Lda.'
+  - 'e Filhos'

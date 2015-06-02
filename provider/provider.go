@@ -80,3 +80,7 @@ type Color struct {
 	allColors map[string]string
 	safeColors []string
 }
+
+type Company struct {
+	Provider
+}
