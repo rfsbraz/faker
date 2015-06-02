@@ -11,6 +11,7 @@ type Faker struct {
 	Person *provider.Person
 	Address *provider.Address
 	Barcode *provider.Barcode
+	Color *provider.Color
 }
 
 func NewFaker(locale string) *Faker {
@@ -19,6 +20,7 @@ func NewFaker(locale string) *Faker {
 	faker.Person = provider.NewPerson(locale)
 	faker.Address = provider.NewAddress(locale)
 	faker.Barcode = provider.NewBarcode()
+	faker.Color = provider.NewColor()
 
 	return faker
 }
@@ -30,4 +32,11 @@ func main() {
 	log.Println(faker.Address.Address())
 	log.Println(faker.Barcode.EAN8())
 	log.Println(faker.Barcode.EAN13())
+	log.Println(faker.Color.ColorName())
+	log.Println(faker.Color.HexForColorName(faker.Color.ColorName()))
+	log.Println(faker.Color.SafeColorName())
+	log.Println(faker.Color.HexColor())
+	log.Println(faker.Color.RGBColorList())
+	log.Println(faker.Color.RGBColor())
+	log.Println(faker.Color.RGBCSSColor())
 }

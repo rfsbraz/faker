@@ -15,7 +15,6 @@ type Provider struct {
 }
 
 func (provider *Provider) Execute(category string) string {
-
 	//We create a template from the required category
 	tmpl, err := template.New("t").Parse(data.Load(category, provider.Locale, provider.Path))
 
@@ -74,4 +73,10 @@ type Address struct {
 
 type Barcode struct {
 	Provider
+}
+
+type Color struct {
+	Provider
+	allColors map[string]string
+	safeColors []string
 }
