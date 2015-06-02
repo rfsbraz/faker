@@ -8,11 +8,11 @@ import (
 const DEFAULT_LOCALE = "en_US"
 
 type Faker struct {
-	Person *provider.Person
-	Address *provider.Address
-	Barcode *provider.Barcode
-	Color *provider.Color
-	Company *provider.Company
+	Person     *provider.Person
+	Address    *provider.Address
+	Barcode    *provider.Barcode
+	Color      *provider.Color
+	Company    *provider.Company
 	CreditCard *provider.CreditCard
 }
 

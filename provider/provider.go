@@ -3,15 +3,15 @@ package provider
 import (
 	"bytes"
 	"github.com/rfsbraz/faker/data"
-	"text/template"
-	"strings"
-	"math/rand"
 	"math"
+	"math/rand"
+	"strings"
+	"text/template"
 )
 
 type Provider struct {
 	Locale string
-	Path string
+	Path   string
 }
 
 func (provider *Provider) Execute(category string) string {
@@ -23,7 +23,7 @@ func (provider *Provider) Execute(category string) string {
 	}
 
 	var buffer bytes.Buffer
-	
+
 	// Execute the first template
 	err = tmpl.Execute(&buffer, provider)
 
@@ -33,7 +33,7 @@ func (provider *Provider) Execute(category string) string {
 
 	// We iterate trough the string, and process all remaining templates
 	//todo: better template detection
-	for ; strings.Contains(buffer.String(), "{{"); tmpl, err = template.New("t").Parse(buffer.String()){
+	for ; strings.Contains(buffer.String(), "{{"); tmpl, err = template.New("t").Parse(buffer.String()) {
 		buffer.Reset()
 
 		// Execute the new template
@@ -56,11 +56,11 @@ func (provider *Provider) LoadFrom(path, category string) string {
 }
 
 func (provider *Provider) Number(length int) int {
-    return rand.Intn(int(math.Pow(10, float64(length))))
+	return rand.Intn(int(math.Pow(10, float64(length))))
 }
 
 func (provider *Provider) Digit() int {
-    return rand.Intn(10)
+	return rand.Intn(10)
 }
 
 type Person struct {
@@ -77,7 +77,7 @@ type Barcode struct {
 
 type Color struct {
 	Provider
-	allColors map[string]string
+	allColors  map[string]string
 	safeColors []string
 }
 
