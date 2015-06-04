@@ -102,6 +102,26 @@ func (credit_card *CreditCard) CardProvider(card_type string) string {
 	return credit_card.cardType(card_type).Name
 }
 
+func (credit_card *CreditCard) CardNumber(card_type string, validate bool, max_checks int) string {
+	card := credit_card.cardType(card_type)
+    var number string
+    for i := 0; i < max_checks; i++ {
+    	number = credit_card.generateNumber(card.PrefixList[rand.Intn(len(card.PrefixList))], card.Length)
+        if !validate || credit_card.validateCreditCardNumber(card, number) {
+           break
+        }
+    }
+    return number
+}
+
+func (credit_card *CreditCard) generateNumber(prefixes []string, length int) string {
+	return "123123"
+}
+
+func (credit_card *CreditCard) validateCreditCardNumber(card *Card, number string) bool {
+	return true
+}
+
 func (credit_card *CreditCard) cardType(card_type string) *Card {
 	if val, ok := credit_card.CardTypes[card_type]; ok && card_type != "" {
 		return val
