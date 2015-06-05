@@ -111,7 +111,10 @@ func (credit_card *CreditCard) CardNumber(card_type string, validate bool, max_c
 	for i := 0; i < max_checks; i++ {
 		number = credit_card.generateNumber(card.PrefixList[rand.Intn(len(card.PrefixList))], card.Length)
 		if !validate || credit_card.validateCreditCardNumber(card, number) {
+			fmt.Printf("%v valid!\n", number)
 			break
+		} else {
+			fmt.Printf("%v not valid!\n", number)
 		}
 	}
 	return number
@@ -135,8 +138,8 @@ func (credit_card *CreditCard) generateNumber(prefixes []string, length int) str
 		reversed_number[i], reversed_number[n-1-i] = reversed_number[n-1-i], reversed_number[i]
 	}
 
-	fmt.Println("Number %v", prefixes)
-	fmt.Println("Reversed Number %v", reversed_number)
+	fmt.Printf("Number %v\n", prefixes)
+	fmt.Printf("Reversed Number %v\n", reversed_number)
 
 	for pos < length-1 {
 		val, _ := strconv.Atoi(reversed_number[pos])

@@ -47,6 +47,6 @@ func main() {
 	log.Println(faker.Company.CatchPhrase())
 	log.Println(faker.CreditCard.CardProvider("amex"))
 	log.Println(faker.CreditCard.CardProvider(""))
-	log.Println(faker.CreditCard.CardNumber("visa", true, 1))
-	log.Println(faker.CreditCard.CardNumber("", true, 1))
+	log.Println(faker.CreditCard.CardNumber("visa", true, 10))
+	log.Println(faker.CreditCard.CardNumber("", true, 10))
 }
