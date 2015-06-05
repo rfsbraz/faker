@@ -1,7 +1,10 @@
 package provider
 
 import (
+	"fmt"
 	"math/rand"
+	"strconv"
+	"strings"
 )
 
 type Card struct {
@@ -104,18 +107,58 @@ func (credit_card *CreditCard) CardProvider(card_type string) string {
 
 func (credit_card *CreditCard) CardNumber(card_type string, validate bool, max_checks int) string {
 	card := credit_card.cardType(card_type)
-    var number string
-    for i := 0; i < max_checks; i++ {
-    	number = credit_card.generateNumber(card.PrefixList[rand.Intn(len(card.PrefixList))], card.Length)
-        if !validate || credit_card.validateCreditCardNumber(card, number) {
-           break
-        }
-    }
-    return number
+	var number string
+	for i := 0; i < max_checks; i++ {
+		number = credit_card.generateNumber(card.PrefixList[rand.Intn(len(card.PrefixList))], card.Length)
+		if !validate || credit_card.validateCreditCardNumber(card, number) {
+			break
+		}
+	}
+	return number
 }
 
 func (credit_card *CreditCard) generateNumber(prefixes []string, length int) string {
-	return "123123"
+
+	for len(prefixes) < length-1 {
+		prefixes = append(prefixes, strconv.Itoa(credit_card.Provider.Digit()))
+	}
+
+	n := len(prefixes)
+
+	tot, pos := 0, 0
+
+	reversed_number := make([]string, len(prefixes))
+
+	copy(reversed_number, prefixes)
+
+	for i := 0; i < n/2; i++ {
+		reversed_number[i], reversed_number[n-1-i] = reversed_number[n-1-i], reversed_number[i]
+	}
+
+	fmt.Println("Number %v", prefixes)
+	fmt.Println("Reversed Number %v", reversed_number)
+
+	for pos < length-1 {
+		val, _ := strconv.Atoi(reversed_number[pos])
+		odd := val * 2
+		if odd > 9 {
+			odd -= 9
+		}
+		tot += odd
+		if pos != (length - 2) {
+			val, _ := strconv.Atoi(reversed_number[pos+1])
+			pos += val
+		}
+		pos += 2
+	}
+
+	// Calculate check digit
+	check_digit := ((tot/10+1)*10 - tot) % 10
+	prefixes = append(prefixes, strconv.Itoa(check_digit))
+
+	number := strings.Join(prefixes, "")
+
+	return number
 }
 
 func (credit_card *CreditCard) validateCreditCardNumber(card *Card, number string) bool {
