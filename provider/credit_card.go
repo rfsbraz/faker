@@ -3,72 +3,70 @@ package provider
 import (
 	"fmt"
 	"math/rand"
-	"strconv"
-	"strings"
 )
 
 type Card struct {
 	Name               string
 	Length             int
-	PrefixList         [][]string
+	PrefixList         [][]int
 	SecurityCode       string
 	SecurityCodeLength int
 }
 
 func NewCreditCard() *CreditCard {
-	visa_prefix_list := [][]string{
-		[]string{"4", "5", "3", "9"},
-		[]string{"4", "5", "5", "6"},
-		[]string{"4", "9", "1", "6"},
-		[]string{"4", "5", "3", "2"},
-		[]string{"4", "9", "2", "9"},
-		[]string{"4", "0", "2", "4", "0", "0", "7", "1"},
-		[]string{"4", "4", "8", "6"},
-		[]string{"4", "7", "1", "6"},
-		[]string{"4"},
+	visa_prefix_list := [][]int{
+		[]int{4, 5, 3, 9},
+		[]int{4, 5, 5, 6},
+		[]int{4, 9, 1, 6},
+		[]int{4, 5, 3, 2},
+		[]int{4, 9, 2, 9},
+		[]int{4, 0, 2, 4, 0, 0, 7, 1},
+		[]int{4, 4, 8, 6},
+		[]int{4, 7, 1, 6},
+		[]int{4},
 	}
-	mastercard_prefix_list := [][]string{
-		[]string{"5", "1"},
-		[]string{"5", "2"},
-		[]string{"5", "3"},
-		[]string{"5", "4"},
-		[]string{"5", "5"},
-	}
-
-	amex_prefix_list := [][]string{
-		[]string{"3", "4"},
-		[]string{"3", "7"},
+	mastercard_prefix_list := [][]int{
+		[]int{5, 1},
+		[]int{5, 2},
+		[]int{5, 3},
+		[]int{5, 4},
+		[]int{5, 5},
 	}
 
-	discover_prefix_list := [][]string{[]string{"6", "0", "1", "1"}}
-
-	diners_prefix_list := [][]string{
-		[]string{"3", "0", "0"},
-		[]string{"3", "0", "1"},
-		[]string{"3", "0", "2"},
-		[]string{"3", "6"},
-		[]string{"3", "8"},
+	amex_prefix_list := [][]int{
+		[]int{3, 4},
+		[]int{3, 7},
 	}
 
-	enroute_prefix_list := [][]string{
-		[]string{"2", "0", "1", "4"},
-		[]string{"2", "1", "4", "9"},
+	discover_prefix_list := [][]int{[]int{6, 0, 1, 1}}
+
+	diners_prefix_list := [][]int{
+		[]int{3, 0, 0},
+		[]int{3, 0, 1},
+		[]int{3, 0, 2},
+		[]int{3, 6},
+		[]int{3, 8},
 	}
 
-	jcb16_prefix_list := [][]string{
-		[]string{"3", "0", "8", "8"},
-		[]string{"3", "0", "9", "6"},
-		[]string{"3", "1", "1", "2"},
-		[]string{"3", "1", "5", "8"},
-		[]string{"3", "3", "3", "7"},
-		[]string{"3", "5", "2", "8"},
+	enroute_prefix_list := [][]int{
+		[]int{2, 0, 1, 4},
+		[]int{2, 1, 4, 9},
 	}
 
-	jcb15_prefix_list := [][]string{
-		[]string{"2", "1", "0", "0"},
-		[]string{"1", "8", "0", "0"},
+	jcb16_prefix_list := [][]int{
+		[]int{3, 0, 8, 8},
+		[]int{3, 0, 9, 6},
+		[]int{3, 1, 1, 2},
+		[]int{3, 1, 5, 8},
+		[]int{3, 3, 3, 7},
+		[]int{3, 5, 2, 8},
 	}
-	voyager_prefix_list := [][]string{[]string{"8", "6", "9", "9"}}
+
+	jcb15_prefix_list := [][]int{
+		[]int{2, 1, 0, 0},
+		[]int{1, 8, 0, 0},
+	}
+	voyager_prefix_list := [][]int{[]int{8, 6, 9, 9}}
 
 	mastercard := &Card{Name: "Mastercard", PrefixList: mastercard_prefix_list, Length: 16, SecurityCode: "CVV", SecurityCodeLength: 4}
 	visa16 := &Card{Name: "VISA 16 digit", PrefixList: visa_prefix_list, Length: 16, SecurityCode: "CVC", SecurityCodeLength: 3}
@@ -111,56 +109,55 @@ func (credit_card *CreditCard) CardNumber(card_type string, validate bool, max_c
 	for i := 0; i < max_checks; i++ {
 		number = credit_card.generateNumber(card.PrefixList[rand.Intn(len(card.PrefixList))], card.Length)
 		if !validate || credit_card.validateCreditCardNumber(card, number) {
-			fmt.Printf("%v valid!\n", number)
+			//fmt.Printf("%v valid!\n", number)
 			break
 		} else {
-			fmt.Printf("%v not valid!\n", number)
+			//fmt.Printf("%v not valid!\n", number)
 		}
 	}
 	return number
 }
 
-func (credit_card *CreditCard) generateNumber(prefixes []string, length int) string {
+func (credit_card *CreditCard) generateNumber(prefixes []int, length int) string {
+
+	// We cam append all the digits directly in prefixes
 
 	for len(prefixes) < length-1 {
-		prefixes = append(prefixes, strconv.Itoa(credit_card.Provider.Digit()))
+		prefixes = append(prefixes, credit_card.Provider.Digit())
 	}
 
 	n := len(prefixes)
 
 	tot, pos := 0, 0
 
-	reversed_number := make([]string, len(prefixes))
-
+	// Revert number
+	reversed_number := make([]int, len(prefixes))
 	copy(reversed_number, prefixes)
-
 	for i := 0; i < n/2; i++ {
 		reversed_number[i], reversed_number[n-1-i] = reversed_number[n-1-i], reversed_number[i]
 	}
 
-	fmt.Printf("Number %v\n", prefixes)
-	fmt.Printf("Reversed Number %v\n", reversed_number)
-
 	for pos < length-1 {
-		val, _ := strconv.Atoi(reversed_number[pos])
-		odd := val * 2
+		odd := reversed_number[pos] * 2
 		if odd > 9 {
 			odd -= 9
 		}
 		tot += odd
 		if pos != (length - 2) {
-			val, _ := strconv.Atoi(reversed_number[pos+1])
-			pos += val
+			pos += reversed_number[pos+1]
 		}
 		pos += 2
 	}
 
 	// Calculate check digit
 	check_digit := ((tot/10+1)*10 - tot) % 10
-	prefixes = append(prefixes, strconv.Itoa(check_digit))
+	prefixes = append(prefixes, check_digit)
 
-	number := strings.Join(prefixes, "")
-
+	//Convert number back to string
+	number := ""
+	for _, value := range prefixes {
+		number = fmt.Sprintf("%v%v", number, value)
+	}
 	return number
 }
 
