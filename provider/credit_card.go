@@ -103,54 +103,40 @@ func (credit_card *CreditCard) CardProvider(card_type string) string {
 	return credit_card.cardType(card_type).Name
 }
 
-func (credit_card *CreditCard) CardNumber(card_type string, validate bool, max_checks int) string {
+func (credit_card *CreditCard) CardNumber(card_type string) string {
 	card := credit_card.cardType(card_type)
-	var number string
-	for i := 0; i < max_checks; i++ {
-		number = credit_card.generateNumber(card.PrefixList[rand.Intn(len(card.PrefixList))], card.Length)
-		if !validate || credit_card.validateCreditCardNumber(card, number) {
-			//fmt.Printf("%v valid!\n", number)
-			break
-		} else {
-			//fmt.Printf("%v not valid!\n", number)
-		}
-	}
-	return number
+	return credit_card.generateNumber(card.PrefixList[rand.Intn(len(card.PrefixList))], card.Length)
 }
 
 func (credit_card *CreditCard) generateNumber(prefixes []int, length int) string {
 
 	// We cam append all the digits directly in prefixes
-
 	for len(prefixes) < length-1 {
 		prefixes = append(prefixes, credit_card.Provider.Digit())
 	}
 
-	n := len(prefixes)
-
-	tot, pos := 0, 0
+	tot := 0
 
 	// Revert number
 	reversed_number := make([]int, len(prefixes))
 	copy(reversed_number, prefixes)
-	for i := 0; i < n/2; i++ {
-		reversed_number[i], reversed_number[n-1-i] = reversed_number[n-1-i], reversed_number[i]
+	for i := 0; i < len(prefixes)/2; i++ {
+		reversed_number[i], reversed_number[len(prefixes)-1-i] = reversed_number[len(prefixes)-1-i], reversed_number[i]
 	}
 
-	for pos < length-1 {
-		odd := reversed_number[pos] * 2
-		if odd > 9 {
-			odd -= 9
+	for i := 0; i < len(prefixes); i++ {
+		if i%2 == 0 {
+			reversed_number[i] *= 2
+			if reversed_number[i] > 9 {
+				reversed_number[i] -= 9
+			}
 		}
-		tot += odd
-		if pos != (length - 2) {
-			pos += reversed_number[pos+1]
-		}
-		pos += 2
+		tot += reversed_number[i]
 	}
 
 	// Calculate check digit
-	check_digit := ((tot/10+1)*10 - tot) % 10
+	check_digit := 10 - tot%10
+
 	prefixes = append(prefixes, check_digit)
 
 	//Convert number back to string
@@ -159,10 +145,6 @@ func (credit_card *CreditCard) generateNumber(prefixes []int, length int) string
 		number = fmt.Sprintf("%v%v", number, value)
 	}
 	return number
-}
-
-func (credit_card *CreditCard) validateCreditCardNumber(card *Card, number string) bool {
-	return true
 }
 
 func (credit_card *CreditCard) cardType(card_type string) *Card {
