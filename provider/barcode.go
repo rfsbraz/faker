@@ -3,8 +3,8 @@ package provider
 import "fmt"
 import "strconv"
 
-func NewBarcode() *Barcode {
-	return &Barcode{Provider{}}
+func NewBarcode(locale string) *Barcode {
+	return &Barcode{Provider{locale, "barcode"}}
 }
 
 func (barcode *Barcode) EAN8() string {

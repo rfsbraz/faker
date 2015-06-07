@@ -3,6 +3,7 @@ package provider
 import (
 	"fmt"
 	"math/rand"
+	"time"
 )
 
 type Card struct {
@@ -13,7 +14,7 @@ type Card struct {
 	SecurityCodeLength int
 }
 
-func NewCreditCard() *CreditCard {
+func NewCreditCard(locale string) *CreditCard {
 	visa_prefix_list := [][]int{
 		[]int{4, 5, 3, 9},
 		[]int{4, 5, 5, 6},
@@ -94,7 +95,7 @@ func NewCreditCard() *CreditCard {
 		"voyager":    voyager,
 	}
 
-	return &CreditCard{Provider{}, card_types}
+	return &CreditCard{Provider{locale, "credit_card"}, card_types}
 }
 
 // Returns the corresponding card provider if one is passed,
@@ -103,7 +104,7 @@ func (credit_card *CreditCard) CardProvider(card_type string) string {
 	return credit_card.cardType(card_type).Name
 }
 
-func (credit_card *CreditCard) CardNumber(card_type string) string {
+func (credit_card *CreditCard) Number(card_type string) string {
 	card := credit_card.cardType(card_type)
 	return credit_card.generateNumber(card.PrefixList[rand.Intn(len(card.PrefixList))], card.Length)
 }
@@ -157,4 +158,26 @@ func (credit_card *CreditCard) cardType(card_type string) *Card {
 		}
 		return credit_card.CardTypes[types[rand.Intn(len(types))]]
 	}
+}
+
+func (credit_card *CreditCard) SecurityCode(card_type string) string {
+	card := credit_card.cardType(card_type)
+	return fmt.Sprintf("%v", credit_card.Provider.NumberWithDigits(card.SecurityCodeLength))
+}
+
+func (credit_card *CreditCard) ExpireDate() string {
+	expire := time.Now().AddDate(0, credit_card.Provider.Number(5*12), credit_card.Provider.Number(31))
+	return expire.Format("01/06")
+}
+
+func (credit_card *CreditCard) Full(provider string) string {
+		card_provider := credit_card.cardType(provider)
+        return fmt.Sprintf("%v\n%v\n%v %v\n%v: %v", 
+        	card_provider.Name, 
+        	NewPerson(credit_card.Provider.Locale).Name(), 
+        	credit_card.Number(provider),
+        	credit_card.ExpireDate(),
+        	card_provider.SecurityCode,
+			credit_card.SecurityCode(provider),
+        )
 }

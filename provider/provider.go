@@ -3,10 +3,11 @@ package provider
 import (
 	"bytes"
 	"github.com/rfsbraz/faker/data"
-	"math"
 	"math/rand"
 	"strings"
 	"text/template"
+	"strconv"
+	"fmt"
 )
 
 type Provider struct {
@@ -55,8 +56,21 @@ func (provider *Provider) LoadFrom(path, category string) string {
 	return data.Load(category, provider.Locale, path)
 }
 
-func (provider *Provider) Number(length int) int {
-	return rand.Intn(int(math.Pow(10, float64(length))))
+func (provider *Provider) NumberWithDigits(length int) int {
+	number := ""
+	for i := 0; i < length; i++ {
+		digit := provider.Digit()
+		number = fmt.Sprintf("%v%v", number, digit)
+		if i == 0 && digit == 0 {
+			i = -1
+		}
+	}
+	val, _ := strconv.Atoi(number)
+	return val
+}
+
+func (provider *Provider) Number(max int) int {
+	return rand.Intn(max)
 }
 
 func (provider *Provider) Digit() int {

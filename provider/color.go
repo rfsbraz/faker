@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func NewColor() *Color {
+func NewColor(locale string) *Color {
 	allColors := map[string]string{
 		"AliceBlue":            "#F0F8FF",
 		"AntiqueWhite":         "#FAEBD7",
@@ -152,7 +152,7 @@ func NewColor() *Color {
 
 	safeColors := []string{"black", "maroon", "green", "navy", "olive", "purple", "teal", "lime", "blue", "silver", "gray", "yellow", "fuchsia", "aqua", "white"}
 
-	color := Color{Provider{}, allColors, safeColors}
+	color := Color{Provider{locale, "color"}, allColors, safeColors}
 
 	return &color
 }

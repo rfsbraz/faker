@@ -19,12 +19,12 @@ address:
 
 building_number:
   - 'S/N'
-  - '{{.Number 1}}'
-  - '{{.Number 2}}'
-  - '{{.Number 3}}'
+  - '{{.NumberWithDigits 1}}'
+  - '{{.NumberWithDigits 2}}'
+  - '{{.NumberWithDigits 3}}'
 
 postcode:
-  - '{{.Number 4}}-{{.Number 3}}'
+  - '{{.NumberWithDigits 4}}-{{.NumberWithDigits 3}}'
 
 city:
   - 'Abrantes'

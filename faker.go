@@ -21,10 +21,10 @@ func NewFaker(locale string) *Faker {
 
 	faker.Person = provider.NewPerson(locale)
 	faker.Address = provider.NewAddress(locale)
-	faker.Barcode = provider.NewBarcode()
-	faker.Color = provider.NewColor()
+	faker.Barcode = provider.NewBarcode(locale)
+	faker.Color = provider.NewColor(locale)
 	faker.Company = provider.NewCompany(locale)
-	faker.CreditCard = provider.NewCreditCard()
+	faker.CreditCard = provider.NewCreditCard(locale)
 
 	return faker
 }
@@ -45,8 +45,5 @@ func main() {
 	log.Println(faker.Color.RGBCSSColor())
 	log.Println(faker.Company.Name())
 	log.Println(faker.Company.CatchPhrase())
-	log.Println(faker.CreditCard.CardProvider("amex"))
-	log.Println(faker.CreditCard.CardProvider(""))
-	log.Println(faker.CreditCard.CardNumber("visa"))
-	log.Println(faker.CreditCard.CardNumber(""))
+	log.Println(faker.CreditCard.Full("amex"))
 }
