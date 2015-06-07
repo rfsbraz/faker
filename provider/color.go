@@ -2,7 +2,6 @@ package provider
 
 import (
 	"fmt"
-	"math/rand"
 	"strings"
 )
 
@@ -162,7 +161,7 @@ func (color *Color) ColorName() string {
 	for k := range color.allColors {
 		names = append(names, k)
 	}
-	name := names[rand.Intn(len(names))]
+	name := names[color.Provider.Number(len(names))]
 	return name
 }
 
@@ -171,15 +170,15 @@ func (color *Color) HexForColorName(name string) string {
 }
 
 func (color *Color) SafeColorName() string {
-	return color.safeColors[rand.Intn(len(color.safeColors))]
+	return color.safeColors[color.Provider.Number(len(color.safeColors))]
 }
 
 func (color *Color) HexColor() string {
-	return strings.ToUpper(fmt.Sprintf("#%x", rand.Intn(16777215)))
+	return strings.ToUpper(fmt.Sprintf("#%x", color.Provider.Number(16777215)))
 }
 
 func (color *Color) RGBColorList() [3]int {
-	return [3]int{rand.Intn(255), rand.Intn(255), rand.Intn(255)}
+	return [3]int{color.Provider.Number(255), color.Provider.Number(255), color.Provider.Number(255)}
 }
 
 func (color *Color) RGBColor() string {

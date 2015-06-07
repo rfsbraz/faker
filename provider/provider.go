@@ -103,3 +103,8 @@ type CreditCard struct {
 	Provider
 	CardTypes map[string]*Card
 }
+
+type Currency struct {
+	Provider
+	currencies []string
+}
