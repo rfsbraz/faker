@@ -2,7 +2,6 @@ package provider
 
 import (
 	"fmt"
-	"math/rand"
 	"time"
 )
 
@@ -108,7 +107,7 @@ func (credit_card *CreditCard) CardProvider(card_type string) string {
 
 func (credit_card *CreditCard) Number(card_type string) string {
 	card := credit_card.cardType(card_type)
-	return credit_card.generateNumber(card.PrefixList[rand.Intn(len(card.PrefixList))], card.Length)
+	return credit_card.generateNumber(card.PrefixList[credit_card.Provider.Number(len(card.PrefixList))], card.Length)
 }
 
 func (credit_card *CreditCard) generateNumber(prefixes []int, length int) string {
@@ -158,7 +157,7 @@ func (credit_card *CreditCard) cardType(card_type string) *Card {
 		for k := range card_types {
 			types = append(types, k)
 		}
-		return card_types[types[rand.Intn(len(types))]]
+		return card_types[types[credit_card.Provider.Number(len(types))]]
 	}
 }
 

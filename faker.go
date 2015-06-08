@@ -51,4 +51,7 @@ func main() {
 	log.Println(faker.Company.CatchPhrase())
 	log.Println(faker.CreditCard.Full("amex"))
 	log.Println(faker.Currency.Code())
+	log.Println(faker.File.MimeType(""))
+	log.Println(faker.File.Name(""))
+	log.Println(faker.File.Extension(""))
 }
