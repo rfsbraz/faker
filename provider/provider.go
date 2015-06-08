@@ -2,12 +2,12 @@ package provider
 
 import (
 	"bytes"
+	"fmt"
 	"github.com/rfsbraz/faker/data"
 	"math/rand"
+	"strconv"
 	"strings"
 	"text/template"
-	"strconv"
-	"fmt"
 )
 
 type Provider struct {
@@ -91,8 +91,6 @@ type Barcode struct {
 
 type Color struct {
 	Provider
-	allColors  map[string]string
-	safeColors []string
 }
 
 type Company struct {
@@ -101,10 +99,12 @@ type Company struct {
 
 type CreditCard struct {
 	Provider
-	CardTypes map[string]*Card
 }
 
 type Currency struct {
 	Provider
-	currencies []string
+}
+
+type File struct {
+	Provider
 }

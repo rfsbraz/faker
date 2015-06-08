@@ -14,7 +14,8 @@ type Faker struct {
 	Color      *provider.Color
 	Company    *provider.Company
 	CreditCard *provider.CreditCard
-	Currency *provider.Currency
+	Currency   *provider.Currency
+	File       *provider.File
 }
 
 func NewFaker(locale string) *Faker {
@@ -27,6 +28,7 @@ func NewFaker(locale string) *Faker {
 	faker.Company = provider.NewCompany(locale)
 	faker.CreditCard = provider.NewCreditCard(locale)
 	faker.Currency = provider.NewCurrency(locale)
+	faker.File = provider.NewFile(locale)
 
 	return faker
 }

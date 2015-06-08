@@ -5,8 +5,11 @@ import (
 	"strings"
 )
 
+var allColors map[string]string
+var safeColors []string
+
 func NewColor(locale string) *Color {
-	allColors := map[string]string{
+	allColors = map[string]string{
 		"AliceBlue":            "#F0F8FF",
 		"AntiqueWhite":         "#FAEBD7",
 		"Aqua":                 "#00FFFF",
@@ -149,16 +152,16 @@ func NewColor(locale string) *Color {
 		"YellowGreen":          "#9ACD3",
 	}
 
-	safeColors := []string{"black", "maroon", "green", "navy", "olive", "purple", "teal", "lime", "blue", "silver", "gray", "yellow", "fuchsia", "aqua", "white"}
+	safeColors = []string{"black", "maroon", "green", "navy", "olive", "purple", "teal", "lime", "blue", "silver", "gray", "yellow", "fuchsia", "aqua", "white"}
 
-	color := Color{Provider{locale, "color"}, allColors, safeColors}
+	color := Color{Provider{locale, "color"}}
 
 	return &color
 }
 
 func (color *Color) ColorName() string {
-	names := make([]string, 0, len(color.allColors))
-	for k := range color.allColors {
+	names := make([]string, 0, len(allColors))
+	for k := range allColors {
 		names = append(names, k)
 	}
 	name := names[color.Provider.Number(len(names))]
@@ -166,11 +169,11 @@ func (color *Color) ColorName() string {
 }
 
 func (color *Color) HexForColorName(name string) string {
-	return color.allColors[name]
+	return allColors[name]
 }
 
 func (color *Color) SafeColorName() string {
-	return color.safeColors[color.Provider.Number(len(color.safeColors))]
+	return safeColors[color.Provider.Number(len(safeColors))]
 }
 
 func (color *Color) HexColor() string {

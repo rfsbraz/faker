@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+var card_types map[string]*Card
+
 type Card struct {
 	Name               string
 	Length             int
@@ -80,7 +82,7 @@ func NewCreditCard(locale string) *CreditCard {
 	jcb16 := &Card{Name: "JCB 16 digit", PrefixList: jcb16_prefix_list, Length: 16, SecurityCode: "CVC", SecurityCodeLength: 3}
 	voyager := &Card{Name: "Voyager", PrefixList: voyager_prefix_list, Length: 15, SecurityCode: "CVC", SecurityCodeLength: 3}
 
-	card_types := map[string]*Card{
+	card_types = map[string]*Card{
 		"mastercard": mastercard,
 		"visa16":     visa16,
 		"visa":       visa16,
@@ -95,7 +97,7 @@ func NewCreditCard(locale string) *CreditCard {
 		"voyager":    voyager,
 	}
 
-	return &CreditCard{Provider{locale, "credit_card"}, card_types}
+	return &CreditCard{Provider{locale, "credit_card"}}
 }
 
 // Returns the corresponding card provider if one is passed,
@@ -149,14 +151,14 @@ func (credit_card *CreditCard) generateNumber(prefixes []int, length int) string
 }
 
 func (credit_card *CreditCard) cardType(card_type string) *Card {
-	if val, ok := credit_card.CardTypes[card_type]; ok && card_type != "" {
+	if val, ok := card_types[card_type]; ok && card_type != "" {
 		return val
 	} else {
-		types := make([]string, 0, len(credit_card.CardTypes))
-		for k := range credit_card.CardTypes {
+		types := make([]string, 0, len(card_types))
+		for k := range card_types {
 			types = append(types, k)
 		}
-		return credit_card.CardTypes[types[rand.Intn(len(types))]]
+		return card_types[types[rand.Intn(len(types))]]
 	}
 }
 
@@ -171,13 +173,13 @@ func (credit_card *CreditCard) ExpireDate() string {
 }
 
 func (credit_card *CreditCard) Full(provider string) string {
-		card_provider := credit_card.cardType(provider)
-        return fmt.Sprintf("%v\n%v\n%v %v\n%v: %v", 
-        	card_provider.Name, 
-        	NewPerson(credit_card.Provider.Locale).Name(), 
-        	credit_card.Number(provider),
-        	credit_card.ExpireDate(),
-        	card_provider.SecurityCode,
-			credit_card.SecurityCode(provider),
-        )
+	card_provider := credit_card.cardType(provider)
+	return fmt.Sprintf("%v\n%v\n%v %v\n%v: %v",
+		card_provider.Name,
+		NewPerson(credit_card.Provider.Locale).Name(),
+		credit_card.Number(provider),
+		credit_card.ExpireDate(),
+		card_provider.SecurityCode,
+		credit_card.SecurityCode(provider),
+	)
 }
