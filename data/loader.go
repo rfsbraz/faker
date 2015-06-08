@@ -29,7 +29,7 @@ func Load(name, locale, path string) string {
 		return randomElement(arrayValue)
 	}
 
-	return "OPS"
+	return fmt.Sprintf("[Failed to load %v from %v-%v]", name, path, locale)
 }
 
 func randomElement(array []interface{}) string {
