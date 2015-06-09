@@ -108,3 +108,7 @@ type Currency struct {
 type File struct {
 	Provider
 }
+
+type Internet struct {
+	Provider
+}
