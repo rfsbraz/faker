@@ -1,12 +1,12 @@
-safe_email_tlds:
+safe_email_tld:
   - 'org'
   - 'com'
   - 'net'
-free_email_domains:
+free_email_domain:
   - 'gmail.com'
   - 'yahoo.com'
   - 'hotmail.com'
-tlds:
+tld:
   - 'com'
   - 'com'
   - 'com'
@@ -17,7 +17,7 @@ tlds:
   - 'info'
   - 'net'
   - 'org'
-uri_pages:
+uri_page:
   - 'index'
   - 'home'
   - 'search'
@@ -32,7 +32,7 @@ uri_pages:
   - 'terms'
   - 'privacy'
   - 'author'
-uri_paths:
+uri_path:
   - 'app'
   - 'main'
   - 'wp-content'
@@ -45,7 +45,7 @@ uri_paths:
   - 'posts'
   - 'list'
   - 'explore'
-uri_extensions:
+uri_extension:
   - '.html'
   - '.html'
   - '.html'
@@ -55,3 +55,28 @@ uri_extensions:
   - '.php'
   - '.jsp'
   - '.asp'
+username:
+  - '{{.LoadFrom "person" "last_name"}}.{{.LoadFrom "person" "first_name"}}'
+  - '{{.LoadFrom "person" "first_name"}}.{{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "person" "first_name"}}.{{.LoadFrom "person" "last_name"}}{{.NumberWithDigits 2}}'
+  - '{{.LoadFrom "person" "first_name"}}{{.NumberWithDigits 2}}'
+  - '{{.LoadFrom "person" "last_name"}}'
+email:
+  - '{{.Load "username"}}@{{.Load "domain"}}'
+  - '{{.Load "username"}}@{{.Load "free_email_domain"}}'
+url:
+  - 'http://www.{{.Load "domain"}}/'
+  - 'http://{{.Load "domain"}}/'
+uri:
+  - '{{.Load "url"}}'
+  - '{{.Load "url"}}{{.Load "uri_page"}}/'
+  - '{{.Load "url"}}{{.Load "uri_page"}}{{.Load "uri_extension"}}'
+  - '{{.Load "url"}}{{.Load "uri_path"}}/{{.Load "uri_page"}}/'
+  - '{{.Load "url"}}{{.Load "uri_path"}}/{{.Load "uri_page"}}{{.Load "uri_extension"}}'
+image_placeholder_service:
+  - 'http://placekitten.com/{Width}/{Height}'
+  - 'http://placehold.it/{Width}x{Height}'
+  - 'http://www.lorempixum.com/{Width}/{Height}'
+  - 'http://dummyimage.com/{Width}x{Height}'
+domain:
+  - '{{.Load "domain_word"}}.{{.Load "tld"}}'
