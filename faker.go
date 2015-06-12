@@ -5,8 +5,6 @@ import (
 	"log"
 )
 
-const DEFAULT_LOCALE = "en_US"
-
 type Faker struct {
 	Person     *provider.Person
 	Address    *provider.Address
@@ -19,24 +17,24 @@ type Faker struct {
 	Internet   *provider.Internet
 }
 
-func NewFaker(locale string) *Faker {
+func NewFaker(locale, fallback_locale string) *Faker {
 	faker := &Faker{}
 
-	faker.Person = provider.NewPerson(locale)
-	faker.Address = provider.NewAddress(locale)
-	faker.Barcode = provider.NewBarcode(locale)
-	faker.Color = provider.NewColor(locale)
-	faker.Company = provider.NewCompany(locale)
-	faker.CreditCard = provider.NewCreditCard(locale)
-	faker.Currency = provider.NewCurrency(locale)
-	faker.File = provider.NewFile(locale)
-	faker.Internet = provider.NewInternet(locale)
+	faker.Person = provider.NewPerson(locale, fallback_locale)
+	faker.Address = provider.NewAddress(locale, fallback_locale)
+	faker.Barcode = provider.NewBarcode(locale, fallback_locale)
+	faker.Color = provider.NewColor(locale, fallback_locale)
+	faker.Company = provider.NewCompany(locale, fallback_locale)
+	faker.CreditCard = provider.NewCreditCard(locale, fallback_locale)
+	faker.Currency = provider.NewCurrency(locale, fallback_locale)
+	faker.File = provider.NewFile(locale, fallback_locale)
+	faker.Internet = provider.NewInternet(locale, fallback_locale)
 
 	return faker
 }
 
 func main() {
-	faker := NewFaker("pt_PT")
+	faker := NewFaker("pt_PT", "en_US")
 	log.Println(faker.Person.Title())
 	log.Println(faker.Person.Name())
 	log.Println(faker.Address.Address())
@@ -57,8 +55,8 @@ func main() {
 	log.Println(faker.File.Name(""))
 	log.Println(faker.File.Extension(""))
 	log.Println(faker.Internet.Username())
-	log.Println(faker.Internet.Email())
-	log.Println(faker.Internet.URL())
-	log.Println(faker.Internet.URI())
-	log.Println(faker.Internet.Image("500", "500"))
+	//log.Println(faker.Internet.Email())
+	//log.Println(faker.Internet.URL())
+	//log.Println(faker.Internet.URI())
+	//log.Println(faker.Internet.Image("500", "500"))
 }

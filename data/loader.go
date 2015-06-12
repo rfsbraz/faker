@@ -5,11 +5,18 @@ import (
 	"gopkg.in/yaml.v1"
 	"io/ioutil"
 	"math/rand"
+	"os"
 	"time"
 )
 
-func Load(name, locale, path string) string {
-	fi, err := ioutil.ReadFile(fmt.Sprintf("locale/%s/%s.yml", path, locale))
+func Load(name, locale, fallback_locale, path string) string {
+	filename := fmt.Sprintf("locale/%s/%s.yml", path, locale)
+
+	if _, err := os.Stat(filename); os.IsNotExist(err) {
+		filename = fmt.Sprintf("locale/%s/%s.yml", path, fallback_locale)
+	}
+
+	fi, err := ioutil.ReadFile(filename)
 	if err != nil {
 		panic(err)
 	}

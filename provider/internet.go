@@ -4,12 +4,12 @@ import (
 	"strings"
 )
 
-func NewInternet(locale string) *Internet {
-	return &Internet{Provider{locale, "internet"}}
+func NewInternet(locale, fallback_locale string) *Internet {
+	return &Internet{Provider{locale, fallback_locale, "internet"}}
 }
 
 func (internet *Internet) Username() string {
-	return internet.Execute("username")
+	return strings.ToLower(internet.Execute("username"))
 }
 
 func (internet *Internet) Email() string {

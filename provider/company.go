@@ -1,7 +1,7 @@
 package provider
 
-func NewCompany(locale string) *Company {
-	return &Company{Provider{locale, "company"}}
+func NewCompany(locale, fallback_locale string) *Company {
+	return &Company{Provider{locale, fallback_locale, "company"}}
 }
 
 func (company *Company) Name() string {

@@ -2,7 +2,7 @@ package provider
 
 var currencies []string
 
-func NewCurrency(locale string) *Currency {
+func NewCurrency(locale, fallback_locale string) *Currency {
 	currencies = []string{
 		"AED",
 		"AFN",
@@ -169,7 +169,7 @@ func NewCurrency(locale string) *Currency {
 		"ZWD",
 	}
 
-	return &Currency{Provider{locale, "currency"}}
+	return &Currency{Provider{locale, fallback_locale, "currency"}}
 }
 
 func (currency *Currency) Code() string {

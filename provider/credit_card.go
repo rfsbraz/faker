@@ -15,7 +15,7 @@ type Card struct {
 	SecurityCodeLength int
 }
 
-func NewCreditCard(locale string) *CreditCard {
+func NewCreditCard(locale, fallback_locale string) *CreditCard {
 	visa_prefix_list := [][]int{
 		[]int{4, 5, 3, 9},
 		[]int{4, 5, 5, 6},
@@ -96,7 +96,7 @@ func NewCreditCard(locale string) *CreditCard {
 		"voyager":    voyager,
 	}
 
-	return &CreditCard{Provider{locale, "credit_card"}}
+	return &CreditCard{Provider{locale, fallback_locale, "credit_card"}}
 }
 
 // Returns the corresponding card provider if one is passed,
@@ -175,7 +175,7 @@ func (credit_card *CreditCard) Full(provider string) string {
 	card_provider := credit_card.cardType(provider)
 	return fmt.Sprintf("%v\n%v\n%v %v\n%v: %v",
 		card_provider.Name,
-		NewPerson(credit_card.Provider.Locale).Name(),
+		NewPerson(credit_card.Provider.Locale, credit_card.Provider.FallbackLocale).Name(),
 		credit_card.Number(provider),
 		credit_card.ExpireDate(),
 		card_provider.SecurityCode,

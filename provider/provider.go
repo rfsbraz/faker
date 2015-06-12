@@ -11,13 +11,14 @@ import (
 )
 
 type Provider struct {
-	Locale string
-	Path   string
+	Locale         string
+	FallbackLocale string
+	Path           string
 }
 
 func (provider *Provider) Execute(category string) string {
 	//We create a template from the required category
-	tmpl, err := template.New("t").Parse(data.Load(category, provider.Locale, provider.Path))
+	tmpl, err := template.New("t").Parse(data.Load(category, provider.Locale, provider.FallbackLocale, provider.Path))
 
 	if err != nil {
 		panic(err)
@@ -53,7 +54,7 @@ func (provider *Provider) Load(category string) string {
 }
 
 func (provider *Provider) LoadFrom(path, category string) string {
-	return data.Load(category, provider.Locale, path)
+	return data.Load(category, provider.Locale, provider.FallbackLocale, path)
 }
 
 func (provider *Provider) NumberWithDigits(length int) int {

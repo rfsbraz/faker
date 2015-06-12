@@ -1,7 +1,7 @@
 package provider
 
-func NewAddress(locale string) *Address {
-	return &Address{Provider{locale, "address"}}
+func NewAddress(locale, fallback_locale string) *Address {
+	return &Address{Provider{locale, fallback_locale, "address"}}
 }
 
 func (address *Address) StreetName() string {

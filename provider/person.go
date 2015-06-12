@@ -1,7 +1,7 @@
 package provider
 
-func NewPerson(locale string) *Person {
-	return &Person{Provider{locale, "person"}}
+func NewPerson(locale, fallback_locale string) *Person {
+	return &Person{Provider{locale, fallback_locale, "person"}}
 }
 
 func (person *Person) FirstName() string {

@@ -2,12 +2,13 @@ package provider
 
 import (
 	"fmt"
+	"strings"
 )
 
 var mime_types map[string][]string
 var file_extensions map[string][]string
 
-func NewFile(locale string) *File {
+func NewFile(locale, fallback_locale string) *File {
 	application_mime_types := []string{
 
 		"application/atom+xml", // Atom feeds
@@ -160,7 +161,7 @@ func NewFile(locale string) *File {
 		"video": video_file_extensions,
 	}
 
-	return &File{Provider{locale, "file"}}
+	return &File{Provider{locale, fallback_locale, "file"}}
 }
 
 func (file *File) MimeType(category string) string {
@@ -170,7 +171,7 @@ func (file *File) MimeType(category string) string {
 
 func (file *File) Name(category string) string {
 	// For now lets use the Person provider, while word generator is not implemented
-	return fmt.Sprintf("%v.%v", NewPerson(file.Provider.Locale).FirstName(), file.Extension(category))
+	return strings.ToLower(fmt.Sprintf("%v.%v", NewPerson(file.Provider.Locale, file.Provider.FallbackLocale).FirstName(), file.Extension(category)))
 }
 
 func (file *File) Extension(category string) string {
