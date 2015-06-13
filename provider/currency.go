@@ -2,7 +2,7 @@ package provider
 
 var currencies []string
 
-func NewCurrency(locale, fallback_locale string) *Currency {
+func NewCurrency(faker *Faker) *Currency {
 	currencies = []string{
 		"AED",
 		"AFN",
@@ -169,9 +169,9 @@ func NewCurrency(locale, fallback_locale string) *Currency {
 		"ZWD",
 	}
 
-	return &Currency{Provider{locale, fallback_locale, "currency"}}
+	return &Currency{faker, "currency"}
 }
 
 func (currency *Currency) Code() string {
-	return currencies[currency.Provider.Number(len(currencies))]
+	return currencies[currency.RandomNumber(len(currencies))]
 }

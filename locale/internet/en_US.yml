@@ -58,25 +58,25 @@ uri_extension:
 username:
   - '{{.LoadFrom "person" "last_name"}}.{{.LoadFrom "person" "first_name"}}'
   - '{{.LoadFrom "person" "first_name"}}.{{.LoadFrom "person" "last_name"}}'
-  - '{{.LoadFrom "person" "first_name"}}.{{.LoadFrom "person" "last_name"}}{{.NumberWithDigits 2}}'
-  - '{{.LoadFrom "person" "first_name"}}{{.NumberWithDigits 2}}'
+  - '{{.LoadFrom "person" "first_name"}}.{{.LoadFrom "person" "last_name"}}{{.RandomNumberOfSize 2}}'
+  - '{{.LoadFrom "person" "first_name"}}{{.RandomNumberOfSize 2}}'
   - '{{.LoadFrom "person" "last_name"}}'
 email:
-  - '{{.Load "username"}}@{{.Load "domain"}}'
-  - '{{.Load "username"}}@{{.Load "free_email_domain"}}'
+  - '{{.LoadFrom "internet" "username"}}@{{.LoadFrom "internet" "domain"}}'
+  - '{{.LoadFrom "internet" "username"}}@{{.LoadFrom "internet" "free_email_domain"}}'
 url:
-  - 'http://www.{{.Load "domain"}}/'
-  - 'http://{{.Load "domain"}}/'
+  - 'http://www.{{.LoadFrom "internet" "domain"}}/'
+  - 'http://{{.LoadFrom "internet" "domain"}}/'
 uri:
-  - '{{.Load "url"}}'
-  - '{{.Load "url"}}{{.Load "uri_page"}}/'
-  - '{{.Load "url"}}{{.Load "uri_page"}}{{.Load "uri_extension"}}'
-  - '{{.Load "url"}}{{.Load "uri_path"}}/{{.Load "uri_page"}}/'
-  - '{{.Load "url"}}{{.Load "uri_path"}}/{{.Load "uri_page"}}{{.Load "uri_extension"}}'
+  - '{{.LoadFrom "internet" "url"}}'
+  - '{{.LoadFrom "internet" "url"}}{{.LoadFrom "internet" "uri_page"}}/'
+  - '{{.LoadFrom "internet" "url"}}{{.LoadFrom "internet" "uri_page"}}{{.LoadFrom "internet" "uri_extension"}}'
+  - '{{.LoadFrom "internet" "url"}}{{.LoadFrom "internet" "uri_path"}}/{{.LoadFrom "internet" "uri_page"}}/'
+  - '{{.LoadFrom "internet" "url"}}{{.LoadFrom "internet" "uri_path"}}/{{.LoadFrom "internet" "uri_page"}}{{.LoadFrom "internet" "uri_extension"}}'
 image_placeholder_service:
   - 'http://placekitten.com/{Width}/{Height}'
   - 'http://placehold.it/{Width}x{Height}'
   - 'http://www.lorempixum.com/{Width}/{Height}'
   - 'http://dummyimage.com/{Width}x{Height}'
 domain:
-  - '{{.Load "domain_word"}}.{{.Load "tld"}}'
+  - '{{.Person.FirstName}}.{{.LoadFrom "internet" "tld"}}'

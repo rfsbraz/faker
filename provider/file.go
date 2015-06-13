@@ -8,7 +8,7 @@ import (
 var mime_types map[string][]string
 var file_extensions map[string][]string
 
-func NewFile(locale, fallback_locale string) *File {
+func NewFile(faker *Faker) *File {
 	application_mime_types := []string{
 
 		"application/atom+xml", // Atom feeds
@@ -161,22 +161,22 @@ func NewFile(locale, fallback_locale string) *File {
 		"video": video_file_extensions,
 	}
 
-	return &File{Provider{locale, fallback_locale, "file"}}
+	return &File{faker, "file"}
 }
 
 func (file *File) MimeType(category string) string {
 	mime_category := file.mimeTypeCategory(category)
-	return mime_types[mime_category][file.Provider.Number(len(mime_types[mime_category]))]
+	return mime_types[mime_category][file.RandomNumber(len(mime_types[mime_category]))]
 }
 
 func (file *File) Name(category string) string {
 	// For now lets use the Person provider, while word generator is not implemented
-	return strings.ToLower(fmt.Sprintf("%v.%v", NewPerson(file.Provider.Locale, file.Provider.FallbackLocale).FirstName(), file.Extension(category)))
+	return strings.ToLower(fmt.Sprintf("%v.%v", file.Faker.Person.FirstName(), file.Extension(category)))
 }
 
 func (file *File) Extension(category string) string {
 	file_category := file.fileCategory(category)
-	return file_extensions[file_category][file.Provider.Number(len(file_extensions[file_category]))]
+	return file_extensions[file_category][file.RandomNumber(len(file_extensions[file_category]))]
 }
 
 func (file *File) mimeTypeCategory(mime_type string) string {
@@ -187,7 +187,7 @@ func (file *File) mimeTypeCategory(mime_type string) string {
 		for k := range mime_types {
 			types = append(types, k)
 		}
-		return types[file.Provider.Number(len(types))]
+		return types[file.RandomNumber(len(types))]
 	}
 }
 
@@ -199,6 +199,6 @@ func (file *File) fileCategory(file_category string) string {
 		for k := range file_extensions {
 			types = append(types, k)
 		}
-		return types[file.Provider.Number(len(types))]
+		return types[file.RandomNumber(len(types))]
 	}
 }

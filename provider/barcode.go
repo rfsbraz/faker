@@ -1,10 +1,12 @@
 package provider
 
-import "fmt"
-import "strconv"
+import (
+	"fmt"
+	"strconv"
+)
 
-func NewBarcode(locale, fallback_locale string) *Barcode {
-	return &Barcode{Provider{locale, fallback_locale, "barcode"}}
+func NewBarcode(faker *Faker) *Barcode {
+	return &Barcode{faker, "barcode"}
 }
 
 func (barcode *Barcode) EAN8() string {
@@ -28,7 +30,7 @@ func (barcode *Barcode) ean(length int) (string, error) {
 	var code []int
 
 	for i := 0; i < length-1; i++ {
-		code = append(code, barcode.Provider.Digit())
+		code = append(code, barcode.RandomDigit())
 	}
 
 	var weights []int

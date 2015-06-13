@@ -311,12 +311,12 @@ prefix:
   - do
 
 name:
-  - '{{.Load "first_name"}} {{.Load "last_name"}}'
-  - '{{.Load "first_name"}} {{.Load "last_name"}}'
-  - '{{.Load "first_name"}} {{.Load "last_name"}}'
-  - '{{.Load "first_name"}} {{.Load "last_name"}}'
-  - '{{.Load "first_name"}} {{.Load "last_name"}}'
-  - '{{.Load "first_name"}} {{.Load "last_name"}}'
-  - '{{.Load "first_name"}} {{.Load "last_name"}} {{.Load "last_name"}}'
-  - '{{.Load "first_name"}} {{.Load "prefix"}} {{.Load "last_name"}}'
-  - '{{.Load "first_name"}} {{.Load "first_name"}} {{.Load "last_name"}}'
+  - '{{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "last_name"}} {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "prefix"}} {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "last_name"}}'

@@ -7,24 +7,24 @@ street_prefix:
   - 'Largo'
 
 street_name:
-  - '{{.Load "street_prefix"}} {{.LoadFrom "person" "last_name"}}'
-  - '{{.Load "street_prefix"}} {{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "last_name"}}'
-  - '{{.Load "street_prefix"}} de {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "address" "street_prefix"}} {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "address" "street_prefix"}} {{.LoadFrom "person" "first_name"}} {{.LoadFrom "person" "last_name"}}'
+  - '{{.LoadFrom "address" "street_prefix"}} de {{.LoadFrom "person" "last_name"}}'
 
 street_address:
-  - '{{.Load "street_name"}}, {{.Load "building_number"}}'
+  - '{{.LoadFrom "address" "street_name"}}, {{.LoadFrom "address" "building_number"}}'
 
 address:
-  - '{{.Load "street_address"}}\n{{.Load "postcode"}} {{.Load "city"}}'
+  - '{{.LoadFrom "address" "street_address"}}\n{{.LoadFrom "address" "postcode"}} {{.LoadFrom "address" "city"}}'
 
 building_number:
   - 'S/N'
-  - '{{.NumberWithDigits 1}}'
-  - '{{.NumberWithDigits 2}}'
-  - '{{.NumberWithDigits 3}}'
+  - '{{.RandomNumberOfSize 1}}'
+  - '{{.RandomNumberOfSize 2}}'
+  - '{{.RandomNumberOfSize 3}}'
 
 postcode:
-  - '{{.NumberWithDigits 4}}-{{.NumberWithDigits 3}}'
+  - '{{.RandomNumberOfSize 4}}-{{.RandomNumberOfSize 3}}'
 
 city:
   - 'Abrantes'

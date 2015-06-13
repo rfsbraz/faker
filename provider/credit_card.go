@@ -15,7 +15,7 @@ type Card struct {
 	SecurityCodeLength int
 }
 
-func NewCreditCard(locale, fallback_locale string) *CreditCard {
+func NewCreditCard(faker *Faker) *CreditCard {
 	visa_prefix_list := [][]int{
 		[]int{4, 5, 3, 9},
 		[]int{4, 5, 5, 6},
@@ -96,7 +96,7 @@ func NewCreditCard(locale, fallback_locale string) *CreditCard {
 		"voyager":    voyager,
 	}
 
-	return &CreditCard{Provider{locale, fallback_locale, "credit_card"}}
+	return &CreditCard{faker, "credit_card"}
 }
 
 // Returns the corresponding card provider if one is passed,
@@ -107,14 +107,14 @@ func (credit_card *CreditCard) CardProvider(card_type string) string {
 
 func (credit_card *CreditCard) Number(card_type string) string {
 	card := credit_card.cardType(card_type)
-	return credit_card.generateNumber(card.PrefixList[credit_card.Provider.Number(len(card.PrefixList))], card.Length)
+	return credit_card.generateNumber(card.PrefixList[credit_card.RandomNumber(len(card.PrefixList))], card.Length)
 }
 
 func (credit_card *CreditCard) generateNumber(prefixes []int, length int) string {
 
 	// We cam append all the digits directly in prefixes
 	for len(prefixes) < length-1 {
-		prefixes = append(prefixes, credit_card.Provider.Digit())
+		prefixes = append(prefixes, credit_card.RandomDigit())
 	}
 
 	tot := 0
@@ -157,17 +157,17 @@ func (credit_card *CreditCard) cardType(card_type string) *Card {
 		for k := range card_types {
 			types = append(types, k)
 		}
-		return card_types[types[credit_card.Provider.Number(len(types))]]
+		return card_types[types[credit_card.RandomNumber(len(types))]]
 	}
 }
 
 func (credit_card *CreditCard) SecurityCode(card_type string) string {
 	card := credit_card.cardType(card_type)
-	return fmt.Sprintf("%v", credit_card.Provider.NumberWithDigits(card.SecurityCodeLength))
+	return fmt.Sprintf("%v", credit_card.RandomNumberOfSize(card.SecurityCodeLength))
 }
 
 func (credit_card *CreditCard) ExpireDate() string {
-	expire := time.Now().AddDate(0, credit_card.Provider.Number(5*12), credit_card.Provider.Number(31))
+	expire := time.Now().AddDate(0, credit_card.RandomNumber(5*12), credit_card.RandomNumber(31))
 	return expire.Format("01/06")
 }
 
@@ -175,7 +175,7 @@ func (credit_card *CreditCard) Full(provider string) string {
 	card_provider := credit_card.cardType(provider)
 	return fmt.Sprintf("%v\n%v\n%v %v\n%v: %v",
 		card_provider.Name,
-		NewPerson(credit_card.Provider.Locale, credit_card.Provider.FallbackLocale).Name(),
+		credit_card.Faker.Person.Name(),
 		credit_card.Number(provider),
 		credit_card.ExpireDate(),
 		card_provider.SecurityCode,

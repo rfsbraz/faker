@@ -8,7 +8,7 @@ import (
 var allColors map[string]string
 var safeColors []string
 
-func NewColor(locale, fallback_locale string) *Color {
+func NewColor(faker *Faker) *Color {
 	allColors = map[string]string{
 		"AliceBlue":            "#F0F8FF",
 		"AntiqueWhite":         "#FAEBD7",
@@ -154,7 +154,7 @@ func NewColor(locale, fallback_locale string) *Color {
 
 	safeColors = []string{"black", "maroon", "green", "navy", "olive", "purple", "teal", "lime", "blue", "silver", "gray", "yellow", "fuchsia", "aqua", "white"}
 
-	color := Color{Provider{locale, fallback_locale, "color"}}
+	color := Color{faker, "color"}
 
 	return &color
 }
@@ -164,7 +164,7 @@ func (color *Color) ColorName() string {
 	for k := range allColors {
 		names = append(names, k)
 	}
-	name := names[color.Provider.Number(len(names))]
+	name := names[color.RandomNumber(len(names))]
 	return name
 }
 
@@ -173,15 +173,15 @@ func (color *Color) HexForColorName(name string) string {
 }
 
 func (color *Color) SafeColorName() string {
-	return safeColors[color.Provider.Number(len(safeColors))]
+	return safeColors[color.RandomNumber(len(safeColors))]
 }
 
 func (color *Color) HexColor() string {
-	return strings.ToUpper(fmt.Sprintf("#%x", color.Provider.Number(16777215)))
+	return strings.ToUpper(fmt.Sprintf("#%x", color.RandomNumber(16777215)))
 }
 
 func (color *Color) RGBColorList() [3]int {
-	return [3]int{color.Provider.Number(255), color.Provider.Number(255), color.Provider.Number(255)}
+	return [3]int{color.RandomNumber(255), color.RandomNumber(255), color.RandomNumber(255)}
 }
 
 func (color *Color) RGBColor() string {

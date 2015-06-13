@@ -1,10 +1,10 @@
 company:
-  - '{{.LoadFrom "person" "last_name"}} {{.Load "company_suffix"}}'
-  - '{{.LoadFrom "person" "last_name"}} {{.LoadFrom "person" "last_name"}} {{.Load "company_suffix"}}'
+  - '{{.LoadFrom "person" "last_name"}} {{.LoadFrom "company" "company_suffix"}}'
+  - '{{.LoadFrom "person" "last_name"}} {{.LoadFrom "person" "last_name"}} {{.LoadFrom "company" "company_suffix"}}'
   - '{{.LoadFrom "person" "last_name"}}'
 
 catch_phrase:
-  - '{{.Load "catch_phrase_noun"}} {{.Load "catch_phrase_verb"}} {{.Load "catch_phrase_attributes"}}'
+  - '{{.LoadFrom "company" "catch_phrase_noun"}} {{.LoadFrom "company" "catch_phrase_verb"}} {{.LoadFrom "company" "catch_phrase_attributes"}}'
 
 catch_phrase_noun:
   - 'a segurança'
