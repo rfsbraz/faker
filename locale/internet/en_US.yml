@@ -1,7 +1,3 @@
-safe_email_tld:
-  - 'org'
-  - 'com'
-  - 'net'
 free_email_domain:
   - 'gmail.com'
   - 'yahoo.com'
@@ -64,6 +60,8 @@ username:
 email:
   - '{{.LoadFrom "internet" "username"}}@{{.LoadFrom "internet" "domain"}}'
   - '{{.LoadFrom "internet" "username"}}@{{.LoadFrom "internet" "free_email_domain"}}'
+free_email:
+  - '{{.LoadFrom "internet" "username"}}@{{.LoadFrom "internet" "free_email_domain"}}'
 url:
   - 'http://www.{{.LoadFrom "internet" "domain"}}/'
   - 'http://{{.LoadFrom "internet" "domain"}}/'
@@ -79,4 +77,4 @@ image_placeholder_service:
   - 'http://www.lorempixum.com/{Width}/{Height}'
   - 'http://dummyimage.com/{Width}x{Height}'
 domain:
-  - '{{.Person.FirstName}}.{{.LoadFrom "internet" "tld"}}'
+  - '{{.Internet.DomainWord}}.{{.LoadFrom "internet" "tld"}}'

@@ -28,7 +28,8 @@ func main() {
 	log.Println(faker.File.Extension(""))
 	log.Println(faker.Internet.Username())
 	log.Println(faker.Internet.Email())
-	//log.Println(faker.Internet.URL())
-	//log.Println(faker.Internet.URI())
-	//log.Println(faker.Internet.Image("500", "500"))
+	log.Println(faker.Internet.FreeEmail())
+	log.Println(faker.Internet.URL())
+	log.Println(faker.Internet.URI())
+	log.Println(faker.Internet.Image("500", "500"))
 }
